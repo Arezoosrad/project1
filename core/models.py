@@ -19,6 +19,9 @@ class MyUser(models.Model):
     email=models.EmailField(verbose_name='ایمیل',null=True,blank=True)
     gender=models.CharField(max_length=10, choices=GenderOption.choices,verbose_name='جنسیت')
 
+    def __str__(self):
+     return self.username
+
     class Meta:
         verbose_name='کاربر '
         verbose_name_plural='کاربر'
@@ -38,6 +41,10 @@ class Post(models.Model):
     class Meta:
         verbose_name='پست'
         verbose_name_plural='پست'
+    def __str__(self):
+        return self.title
+        
+
 
 class Comments(models.Model):
     user=models.ForeignKey(to=MyUser , on_delete=models.CASCADE,verbose_name='کامنت توسط')
@@ -49,7 +56,10 @@ class Comments(models.Model):
     parent=models.ForeignKey('self',null=True,blank=True,on_delete=models.CASCADE,related_name='replied',verbose_name='پاسخ به کامنت')
     class Meta:
         verbose_name='کامنت'
-        verbose_name_plural='کامنت'
+        verbose_name_plural='کامنت'\
+        
+        def __str__(self):
+            return self.content
 
 
 class Like(models.Model):
@@ -59,7 +69,7 @@ class Like(models.Model):
     class Meta:
         verbose_name='لایک'
         verbose_name_plural='لایک'
-
+    
 
 class Modes(models.TextChoices):
     pending=('p','در انتظار')
